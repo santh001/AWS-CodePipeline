@@ -1,4 +1,4 @@
-📌 PROJECT DESCRIPTION (DETAILED)
+📌#PROJECT DESCRIPTION (DETAILED)
 
 This project demonstrates the implementation of a continuous deployment pipeline using AWS managed services. The pipeline automates the deployment of a sample web application hosted on a Windows EC2 instance.
 
@@ -19,6 +19,7 @@ Configured IAM roles and permissions for secure service interaction
 Successfully validated deployment via a public web endpoint
 
 📌 STEP-BY-STEP PROJECT EXPLANATION (POINTS)
+
 🔹 Step 1: AWS Console & Region Selection
 
 Logged into AWS Management Console using lab credentials
