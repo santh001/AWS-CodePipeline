@@ -1,4 +1,4 @@
-📌#PROJECT DESCRIPTION (DETAILED)
+📌PROJECT DESCRIPTION (DETAILED)
 
 This project demonstrates the implementation of a continuous deployment pipeline using AWS managed services. The pipeline automates the deployment of a sample web application hosted on a Windows EC2 instance.
 
