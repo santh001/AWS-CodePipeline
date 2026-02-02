@@ -1,0 +1,71 @@
+1. Title
+
+Automated Application Deployment Using AWS CodePipeline and CodeDeploy
+
+2. Objective
+
+To design and implement an automated CI/CD pipeline that deploys a web application to a Windows EC2 instance using AWS managed services.
+
+3. Architecture
+
+Amazon S3 (Source)
+
+AWS CodePipeline (Orchestration)
+
+AWS CodeDeploy (Deployment)
+
+Windows EC2 (Hosting)
+
+4. Tools & Services Used
+
+Amazon S3
+
+AWS CodePipeline
+
+AWS CodeDeploy
+
+Amazon EC2
+
+IAM
+
+Security Groups
+
+5. Implementation Steps
+
+(Use the step-by-step explanation already provided)
+
+6. Result
+
+The application was successfully deployed automatically, and the web page was accessible via public IP.
+
+7. Conclusion
+
+This project demonstrates a real-world CI/CD implementation using AWS services and highlights automation, security, and scalability.
+
+🧪 COMMON ERRORS & FIXES (VERY IMPORTANT)
+❌ Error: Pipeline Source Stage Fails
+
+Cause: S3 versioning disabled
+Fix: Enable versioning on S3 bucket
+
+❌ Error: Deployment Failed
+
+Cause: CodeDeploy agent not running
+Fix: Restart agent on EC2
+
+Start-Service codedeployagent
+
+❌ Error: Website Not Opening
+
+Cause: Port 80 blocked
+Fix: Allow HTTP in security group
+
+❌ Error: EC2 Not Found in Deployment Group
+
+Cause: Missing IAM role
+Fix: Attach EC2CodeDeployRole to instance
+
+❌ Error: Access Denied
+
+Cause: Incorrect IAM policy
+Fix: Attach correct AWS managed policies
