@@ -1,0 +1,240 @@
+✅ COMPLETE PROJECT (ONE SET)
+Project Title
+
+Deploy a Sample Web Application Using AWS CodePipeline and CodeDeploy on Windows EC2
+
+🧩 PROJECT ARCHITECTURE
+S3 Bucket → CodePipeline → CodeDeploy → Windows EC2 → Web App Output
+
+🟢 STEP 1: Create S3 Bucket
+Go to AWS Console → S3 → Create Bucket
+
+Bucket Name:
+
+awscodepipeline-demobucket-12345
+
+
+Region:
+Asia Pacific (Mumbai)
+
+✔ Enable Versioning
+✔ Create Bucket
+
+Upload File:
+
+Upload this file into bucket:
+
+SampleApp_Windows.zip
+
+🟢 STEP 2: Create IAM Roles
+✅ Role 1: CodeDeploy Role
+
+IAM → Roles → Create Role
+
+Service: CodeDeploy
+Policy:
+
+AWSCodeDeployRole
+
+
+Role Name:
+
+CodeDeployEC2Role
+
+✅ Role 2: EC2 Role
+
+IAM → Roles → Create Role
+
+Service: EC2
+Policy:
+
+AmazonEC2RoleforAWSCodeDeploy
+
+
+Role Name:
+
+EC2CodeDeployRole
+
+🟢 STEP 3: Create Security Group
+
+EC2 → Security Groups → Create
+
+Name:
+
+App-SG
+
+Inbound Rules:
+Type	Port	Source
+HTTP	80	0.0.0.0/0
+HTTPS	443	0.0.0.0/0
+🟢 STEP 4: Launch Windows EC2
+
+EC2 → Launch Instance
+
+Name:
+
+MyCodePipelineDemo
+
+
+AMI:
+
+Windows Server 2019 Base
+
+
+Instance Type:
+
+t2.micro
+
+
+IAM Role:
+
+EC2CodeDeployRole
+
+
+Security Group:
+
+App-SG
+
+
+Launch instance.
+
+🟢 STEP 5: Install CodeDeploy Agent (VERY IMPORTANT)
+Connect to EC2 using RDP
+
+Open PowerShell as Administrator:
+
+cd C:\temp
+Invoke-WebRequest https://aws-codedeploy-ap-south-1.s3.ap-south-1.amazonaws.com/latest/codedeploy-agent.msi -OutFile codedeploy-agent.msi
+Start-Process msiexec.exe -ArgumentList '/i codedeploy-agent.msi /quiet' -Wait
+
+
+Check:
+
+Get-Service codedeployagent
+
+
+Status must be Running
+
+🟢 STEP 6: Create CodeDeploy Application
+
+CodeDeploy → Applications → Create
+
+Application Name:
+
+MyDemoApplication
+
+
+Platform:
+
+EC2/On-Premises
+
+Create Deployment Group
+
+Name:
+
+MyDeploymentGroup
+
+
+Service Role:
+
+CodeDeployEC2Role
+
+
+Deployment Type:
+
+In-place
+
+
+Deployment Config:
+
+CodeDeployDefault.AllAtOnce
+
+🟢 STEP 7: Create CodePipeline
+
+CodePipeline → Create Pipeline
+
+Pipeline Settings
+
+Name:
+
+mypipeline
+
+
+Service Role: Default
+
+SOURCE STAGE
+
+Provider:
+
+Amazon S3
+
+
+Bucket:
+
+awscodepipeline-demobucket-12345
+
+
+Object Key:
+
+SampleApp_Windows.zip
+
+
+Change Detection:
+
+S3 Versioning
+
+BUILD STAGE
+Skip Build Stage
+
+DEPLOY STAGE
+
+Provider:
+
+AWS CodeDeploy
+
+
+Application:
+
+MyDemoApplication
+
+
+Deployment Group:
+
+MyDeploymentGroup
+
+
+Create Pipeline.
+
+🟢 STEP 8: REQUIRED PROJECT FILES (INSIDE ZIP)
+
+Your ZIP must contain these:
+
+📁 appspec.yml
+version: 0.0
+os: windows
+files:
+  - source: \
+    destination: C:\inetpub\wwwroot
+
+📁 index.html
+<html>
+<body style="background-color:lightgreen;">
+<h1>Congratulations!</h1>
+<h2>Deployment Successful using AWS CodePipeline</h2>
+</body>
+</html>
+
+✅ FINAL OUTPUT CHECK (LAB EXPECTED)
+Pipeline Status:
+Stage	Status
+Source	Succeeded
+Deploy	Succeeded
+Web Output:
+
+Open browser:
+
+http://EC2-Public-IP
+
+🎉 You MUST see:
+Congratulations!
+Deployment Successful using AWS CodePipeline
